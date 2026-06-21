@@ -13,6 +13,8 @@ export default function ControlPanel({modeRef, resetMap }) {
             setLoadingRoute(true);
             const path = await findShortestPath(startPoint, endPoint)
             setPathCoords(path); 
+            console.log('Shortest path coordinates:', path);
+            setLoadingRoute(false);
     }
     const resetSimulation = () => {
         resetMap();

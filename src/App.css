@@ -3,9 +3,9 @@
 ========================= */
 .App {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: grid;
-  grid-template-rows: 60px 1fr 1fr;
+  grid-template-rows: 60px max-content max-content;
   grid-template-columns: 320px 1fr;
 
   grid-template-areas:
@@ -49,12 +49,10 @@
 ========================= */
 .control-panel {
   grid-area: control;
-  margin: 10px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-
 }
 
 /* =========================
@@ -62,9 +60,9 @@
 ========================= */
 .info-panel {
   grid-area: info;
-  margin: 10px;
   padding: 16px ;
   display: flex;
+  gap: 12px;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -200,8 +198,8 @@ button:active {
   100% { opacity: 0.6; }
 }
 p{
-  display: inline-flex;
-  align-items: space-around;
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
   width: 90%;

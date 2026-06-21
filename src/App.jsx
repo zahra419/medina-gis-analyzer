@@ -5,6 +5,7 @@ import InfoPanel from './components/InfoPanel';
 import maplibregl from 'maplibre-gl';
 import HeaderBar from './components/Headerbar';
 import { SimulationContext } from './hooks/context';
+import { Accessibility } from 'lucide-react';
 
 
 function App() {
@@ -80,13 +81,13 @@ const {
   }, []);
 
 useEffect(() => {
-  if (!map.current || pathCoords.length < 2) return;
+  if (!map.current || pathCoords.pathCoords.length < 2) return;
  
     const geojson = {
       type: 'Feature',
       geometry: {
         type: 'LineString',
-        coordinates: pathCoords
+        coordinates: pathCoords.pathCoords  
       }
     };
 
@@ -110,7 +111,7 @@ useEffect(() => {
   
   };
    setLoadingRoute(false);
-}, [pathCoords]);
+}, [pathCoords.pathCoords]);
 function resetMap() {
   if (!map.current) return;
 
@@ -138,12 +139,13 @@ function resetMap() {
   }
 
   // reset state
-  setPathCoords([]);
+  setPathCoords({ pathCoords: [] ,routeInfo: {}});
   setStartPoint(null);
   setEndPoint(null);
   setStats({
-    distance: 0,
-    time: 0
+    accessibility: "Accessibility: Not available",
+    riskScore: 0,
+    dangerProximity: "Not available"
   });
   setSelection({
   incident: null,

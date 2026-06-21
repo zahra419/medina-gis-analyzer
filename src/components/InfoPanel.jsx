@@ -6,27 +6,24 @@ export default function InfoPanel({ selection }) {
    const {pathCoords, stats, setStats}=useContext(SimulationContext);
     
     useEffect(() => {
-        if (pathCoords.length > 0 ) {
+        if (pathCoords.pathCoords.length > 0 ) {
             
-            const line = lineString(pathCoords);
-            const distanceKm = length(line, { units: "kilometers" });
-            const distanceM = distanceKm * 1000;
-            const speedMps = 1.2; // walking speed in medina in meters per second
-            const timeMinutes = distanceM / speedMps/60;
             setStats({
-                distance: distanceM,
-                time: timeMinutes
+                accessibility: pathCoords.routeInfo.accessibility,
+                riskScore: pathCoords.routeInfo.riskScore,
+                dangerProximity: pathCoords.routeInfo.dangerProximity,
             });
             
         }
-    }, [pathCoords, selection]);
+    }, [pathCoords.pathCoords, selection]);
     return (
         <div className="info-panel">
             <div className="tool-title">Information</div>
             <p>Incident location ({selection.incident === 'selected' ? 'Selected' : 'Not selected'})</p>
             <p>Entry Point  ({selection.entryPoint === 'selected' ? 'Selected' : 'Not selected'})</p>
-            <p>Distance  ({ stats.distance.toFixed(2)} meters)</p>
-            <p>Estimated Time ({ stats.time.toFixed(2)} minutes)</p>
+            <p>Risk Score ({ stats.riskScore }/100)</p>
+            <p>Danger Proximity ({stats.dangerProximity})</p>
+            <p>{Array.isArray(stats.accessibility) ? stats.accessibility.join(', ') : stats.accessibility}</p>
            
         </div>
     );
