@@ -66,11 +66,9 @@ function getStreetType(tags) {
 =========================== */
 function getEmergencyAccess(tags, width) {
   if (tags.highway === "steps") return "No access";
-
   if (width >= 3.5) return "Fire truck accessible";
   if (width >= 2.5) return "Ambulance accessible";
   if (width >= 1.5) return "Motorbike accessible";
-
   return "Pedestrian only";
 }
 
@@ -114,18 +112,12 @@ export function buildGraph(streets,incidentPoint) {
     for (let i = 0; i < len - 1; i++) {
       const a = String(nodes[i]);
       const b = String(nodes[i + 1]);
-
       const p1 = coords[i];
       const p2 = coords[i + 1];
-
       if (!p1 || !p2) continue;
-
       nodeCoords[a] = p1;
       nodeCoords[b] = p2;
-
-      const distance = turf.distance(
-        turf.point(p1),
-        turf.point(p2),
+      const distance = turf.distance(turf.point(p1),turf.point(p2),
         { units: "meters" }
       );
 
@@ -288,74 +280,36 @@ function buildRouteInfo(pathNodes, edgeMap) {
 /* ===========================
    MAIN FUNCTION
 =========================== */
-export async function findShortestPath(
-  startPoint,
-  endPoint
-) {
+export async function findShortestPath(startPoint,endPoint) {
   try {
     console.log(startPoint , endPoint)
-    const data = await fetchStreets(
-      31.6258,
-      -7.9892
-    );
+    const data = await fetchStreets(31.6258,-7.9892);
 
     const streets = extractStreets(data);
 
     // build graph first
-    const {
-      graph,
-      nodeCoords,
-      edgeMap,
-    } = buildGraph(streets,startPoint);
+    const {graph,nodeCoords,edgeMap,} = buildGraph(streets,startPoint);
 
     // now nodeCoords exists
-    const startNode =
-      findNearestNode(
-        startPoint,
-        nodeCoords
-      );
+    const startNode =findNearestNode(startPoint,nodeCoords);
 
-    const endNode =
-      findNearestNode(
-        endPoint,
-        nodeCoords
-      );
+    const endNode =findNearestNode(endPoint,nodeCoords);
 
-    const { dist, prev } =
-      dijkstra(
-        graph,
-        startNode,
-        endNode
-      );
+    const { dist, prev } =dijkstra(graph,startNode,endNode);
 
     if (dist[endNode] === Infinity) {
-      return {
-        pathCoords: [],
-        routeInfo: {},
-      };
+      return {pathCoords: [],routeInfo: {},};
     }
 
-    const pathNodes =
-      reconstructPath(
-        prev,
-        startNode,
-        endNode
-      );
+    const pathNodes =reconstructPath(prev,startNode,endNode);
 
     const pathCoords = pathNodes
       .map((id) => nodeCoords[id])
       .filter(Boolean);
 
-    const routeInfo =
-      buildRouteInfo(
-        pathNodes,
-        edgeMap
-      );
+    const routeInfo =buildRouteInfo( pathNodes,edgeMap); 
 
-    return {
-      pathCoords,
-      routeInfo,
-    };
+    return {pathCoords,routeInfo,};
   } catch (err) {
     console.error(err);
 
