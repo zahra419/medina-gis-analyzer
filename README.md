@@ -124,7 +124,7 @@ npm run dev
 Open the application in your browser at:
 
 ```
-http://localhost:3000
+http://localhost:5173/
 ```
 
 or the address displayed in the terminal.
