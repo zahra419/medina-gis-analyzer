@@ -36,20 +36,6 @@ Unlike conventional navigation systems that primarily optimize routes based on d
 
 ---
 
-## Project Structure
-
-```
-Medina-GIS-Analyzer/
-│
-├── src/                 # Source code
-├── public/              # Static resources
-├── package.json
-├── package-lock.json
-├── README.md
-└── ...
-```
-
----
 
 ## How the System Works
 
@@ -88,7 +74,7 @@ For each computed route, the application generates:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/zahra419/medina-gis-analyzer.git
 ```
 
 Navigate to the project directory:
@@ -109,17 +95,10 @@ npm install
 
 Start the development server:
 
-```bash
-npm start
-```
-
-or
 
 ```bash
 npm run dev
 ```
-
-(depending on the project configuration)
 
 Open the application in your browser at:
 
@@ -164,12 +143,6 @@ or the address displayed in the terminal.
 - Alternative routing algorithms (A*, multi-objective optimization).
 - Integration with emergency management systems.
 - Mobile version for field responders.
-
----
-
-## Authors
-
-Developed as part of an academic research project on geospatial analysis and emergency routing.
 
 ---
 
